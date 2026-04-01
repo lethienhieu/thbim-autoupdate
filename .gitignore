@@ -1,0 +1,17 @@
+# Build outputs
+bin/
+obj/
+publish/
+
+# VS files
+.vs/
+
+# Claude config
+.claude/
+
+# Release artifacts (uploaded separately)
+releases/*.zip
+
+# User-specific files
+*.user
+*.suo

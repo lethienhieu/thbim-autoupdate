@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>THBIM.AutoUpdate</AssemblyName>
+    <RootNamespace>THBIM.AutoUpdate</RootNamespace>
+    <ApplicationIcon>Resources\thbim-icon.ico</ApplicationIcon>
+    <Version>1.0.9</Version>
+    <FileVersion>1.0.9.0</FileVersion>
+    <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <Product>THBIM AutoUpdate</Product>
+    <Company>THBIM</Company>
+    <Description>Auto-update THBIM Revit Addins</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\thbim-icon.ico" Condition="Exists('Resources\thbim-icon.ico')" />
+  </ItemGroup>
+
+</Project>
