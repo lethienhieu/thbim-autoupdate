@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THBIM AutoUpdate - UI Mockup</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #FFD700;
+            --gold-light: #FFE44D;
+            --gold-dark: #B8960C;
+            --gold-glow: rgba(255, 215, 0, 0.3);
+            --black: #0A0A0A;
+            --black-light: #141414;
+            --black-card: rgba(20, 20, 20, 0.6);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.1);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-tertiary: rgba(255, 255, 255, 0.35);
+            --success: #34C759;
+            --warning: #FF9F0A;
+            --error: #FF453A;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--black);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ========== ANIMATED BACKGROUND ========== */
+        .bg-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .liquid-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .liquid-orb.orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+
+        .liquid-orb.orb-2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, transparent 70%);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -5s;
+            animation-duration: 22s;
+        }
+
+        .liquid-orb.orb-3 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            animation-delay: -10s;
+            animation-duration: 25s;
+        }
+
+        .liquid-orb.orb-4 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(184, 150, 12, 0.5) 0%, transparent 70%);
+            top: 30%;
+            right: 20%;
+            animation-delay: -7s;
+            animation-duration: 20s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -40px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(40px, 30px) scale(1.05); }
+        }
+
+        /* ========== NOISE TEXTURE OVERLAY ========== */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* ========== MAIN APP CONTAINER ========== */
+        .app-window {
+            position: relative;
+            z-index: 10;
+            width: 460px;
+            height: 680px;
+            margin: 30px auto;
+            background: linear-gradient(
+                145deg,
+                rgba(25, 25, 25, 0.85) 0%,
+                rgba(15, 15, 15, 0.9) 50%,
+                rgba(20, 20, 20, 0.85) 100%
+            );
+            backdrop-filter: blur(40px) saturate(1.8);
+            -webkit-backdrop-filter: blur(40px) saturate(1.8);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 0 0 0.5px rgba(255, 215, 0, 0.1),
+                0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(255, 215, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========== TITLEBAR ========== */
+        .titlebar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--glass-border);
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .titlebar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: var(--black);
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+        }
+
+        .app-title {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .app-title span {
+            color: var(--gold);
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .win-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0.7;
+        }
+
+        .win-btn:hover { opacity: 1; transform: scale(1.15); }
+        .win-btn.minimize { background: var(--gold); }
+        .win-btn.maximize { background: var(--success); }
+        .win-btn.close { background: var(--error); }
+
+        /* ========== STATUS BANNER ========== */
+        .status-banner {
+            margin: 16px 16px 0;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 215, 0, 0.04) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            animation: pulse-border 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(255, 215, 0, 0.15); }
+            50% { border-color: rgba(255, 215, 0, 0.3); }
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
+            animation: blink 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .status-text {
+            flex: 1;
+        }
+
+        .status-text .label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 2px;
+        }
+
+        .status-text .value {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .status-version {
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(255, 215, 0, 0.15);
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+
+        /* ========== SECTION HEADER ========== */
+        .section-header {
+            padding: 16px 20px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: -0.2px;
+        }
+
+        .section-badge {
+            font-size: 11px;
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        /* ========== ADDINS LIST ========== */
+        .addins-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 12px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 215, 0, 0.2) transparent;
+        }
+
+        .addins-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .addins-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .addins-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .addin-card {
+            padding: 12px 14px;
+            margin-bottom: 6px;
+            border-radius: 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .addin-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .addin-card:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 215, 0, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .addin-card:hover::before {
+            opacity: 1;
+        }
+
+        .addin-card.updating {
+            border-color: rgba(255, 159, 10, 0.3);
+        }
+
+        .addin-card.updated {
+            border-color: rgba(52, 199, 89, 0.2);
+        }
+
+        .addin-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .addin-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .addin-icon.revit {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        .addin-icon.tekla {
+            background: linear-gradient(135deg, rgba(0, 168, 255, 0.2), rgba(0, 168, 255, 0.05));
+            border: 1px solid rgba(0, 168, 255, 0.15);
+        }
+
+        .addin-icon.tool {
+            background: linear-gradient(135deg, rgba(175, 82, 222, 0.2), rgba(175, 82, 222, 0.05));
+            border: 1px solid rgba(175, 82, 222, 0.15);
+        }
+
+        .addin-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .addin-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: -0.2px;
+        }
+
+        .addin-desc {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 1px;
+        }
+
+        .addin-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .status-tag {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .status-tag.latest {
+            background: rgba(52, 199, 89, 0.12);
+            color: var(--success);
+        }
+
+        .status-tag.update {
+            background: rgba(255, 215, 0, 0.12);
+            color: var(--gold);
+            animation: pulse-tag 2s ease-in-out infinite;
+        }
+
+        .status-tag.updating {
+            background: rgba(255, 159, 10, 0.12);
+            color: var(--warning);
+        }
+
+        @keyframes pulse-tag {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .addin-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .addin-version {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .addin-version span {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ========== PROGRESS BAR ========== */
+        .progress-container {
+            margin-top: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -1px;
+            width: 20px;
+            height: 5px;
+            background: var(--gold-light);
+            filter: blur(4px);
+            border-radius: 50%;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            font-size: 10px;
+            color: var(--text-tertiary);
+        }
+
+        /* ========== BOTTOM ACTION BAR ========== */
+        .action-bar {
+            padding: 12px 16px 16px;
+            border-top: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .btn-update-all {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--black);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.25);
+        }
+
+        .btn-update-all::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: left 0.6s;
+        }
+
+        .btn-update-all:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.35);
+        }
+
+        .btn-update-all:hover::before {
+            left: 100%;
+        }
+
+        .btn-update-all:active {
+            transform: translateY(0);
+        }
+
+        .action-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding: 0 4px;
+        }
+
+        .last-check {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .settings-btn {
+            background: none;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .settings-btn:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        /* ========== NOTIFICATION TOAST ========== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            padding: 14px 20px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(25, 25, 25, 0.95), rgba(15, 15, 15, 0.98));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: toast-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            max-width: 320px;
+        }
+
+        .toast.hidden {
+            animation: toast-out 0.4s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+        }
+
+        @keyframes toast-in {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes toast-out {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(120%); opacity: 0; }
+        }
+
+        .toast-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .toast-content .toast-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .toast-content .toast-msg {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* ========== SETTINGS MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fade-in 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            width: 380px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(25, 25, 25, 0.95), rgba(15, 15, 15, 0.98));
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            animation: modal-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        @keyframes modal-in {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 20px 20px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: var(--text-secondary);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 69, 58, 0.15);
+            color: var(--error);
+        }
+
+        .modal-body {
+            padding: 4px 20px 20px;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .setting-sublabel {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            width: 44px;
+            height: 26px;
+            border-radius: 13px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s;
+            border: none;
+        }
+
+        .toggle.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        }
+
+        .toggle::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle.active::after {
+            transform: translateX(18px);
+        }
+
+        /* Select Dropdown */
+        .select-wrap select {
+            appearance: none;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 6px 28px 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .select-wrap select:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .select-wrap {
+            position: relative;
+        }
+
+        .select-wrap::after {
+            content: '>';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            font-size: 10px;
+            color: var(--text-tertiary);
+            pointer-events: none;
+        }
+
+        /* ========== TRAY ICON PREVIEW ========== */
+        .tray-preview {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .tray-popup {
+            width: 260px;
+            padding: 16px;
+            border-radius: 14px;
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.98), rgba(15, 15, 15, 0.99));
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            display: none;
+            animation: popup-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tray-popup.show {
+            display: block;
+        }
+
+        @keyframes popup-in {
+            from { transform: translateY(10px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .tray-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .tray-menu-item:hover {
+            background: rgba(255, 215, 0, 0.08);
+            color: var(--text-primary);
+        }
+
+        .tray-menu-item .icon {
+            font-size: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .tray-divider {
+            height: 1px;
+            background: var(--glass-border);
+            margin: 6px 0;
+        }
+
+        .tray-menu-item.danger:hover {
+            background: rgba(255, 69, 58, 0.1);
+            color: var(--error);
+        }
+
+        .tray-icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--black);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .tray-icon-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        .page-label {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            z-index: 100;
+            font-size: 11px;
+            color: var(--text-tertiary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-container">
+        <div class="liquid-orb orb-1"></div>
+        <div class="liquid-orb orb-2"></div>
+        <div class="liquid-orb orb-3"></div>
+        <div class="liquid-orb orb-4"></div>
+    </div>
+    <div class="noise-overlay"></div>
+
+    <div class="page-label">THBIM AutoUpdate &mdash; UI Mockup</div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">&#10003;</span>
+        <div class="toast-content">
+            <div class="toast-title">Update Complete</div>
+            <div class="toast-msg">THBIM Revit Addins v2.1.0 installed</div>
+        </div>
+    </div>
+
+    <!-- Main App Window -->
+    <div class="app-window">
+        <!-- Titlebar -->
+        <div class="titlebar">
+            <div class="titlebar-left">
+                <div class="app-icon">TH</div>
+                <div class="app-title"><span>THBIM</span> AutoUpdate</div>
+            </div>
+            <div class="window-controls">
+                <button class="win-btn minimize"></button>
+                <button class="win-btn maximize"></button>
+                <button class="win-btn close"></button>
+            </div>
+        </div>
+
+        <!-- Status Banner -->
+        <div class="status-banner">
+            <div class="status-dot"></div>
+            <div class="status-text">
+                <div class="label">Connection</div>
+                <div class="value">Connected to GitHub &mdash; 3 updates available</div>
+            </div>
+            <div class="status-version">v2.1.0</div>
+        </div>
+
+        <!-- Section Header -->
+        <div class="section-header">
+            <div class="section-title">Installed Addins</div>
+            <div class="section-badge">6 addins</div>
+        </div>
+
+        <!-- Addins List -->
+        <div class="addins-list">
+            <!-- Card 1 - Has update -->
+            <div class="addin-card">
+                <div class="addin-top">
+                    <div class="addin-icon revit">&#9670;</div>
+                    <div class="addin-info">
+                        <div class="addin-name">THBIM Revit Tools</div>
+                        <div class="addin-desc">Core structural modeling tools</div>
+                    </div>
+                    <div class="addin-status">
+                        <span class="status-tag update">Update</span>
+                    </div>
+                </div>
+                <div class="addin-bottom">
+                    <div class="addin-version">Installed <span>v2.0.3</span> &rarr; <span style="color: var(--gold);">v2.1.0</span></div>
+                </div>
+            </div>
+
+            <!-- Card 2 - Updating with progress -->
+            <div class="addin-card updating">
+                <div class="addin-top">
+                    <div class="addin-icon revit">&#9670;</div>
+                    <div class="addin-info">
+                        <div class="addin-name">PPVC Rebar Suite</div>
+                        <div class="addin-desc">Wall, Beam, Slab rebar automation</div>
+                    </div>
+                    <div class="addin-status">
+                        <span class="status-tag updating">Updating</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 67%;"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Downloading... 67%</span>
+                        <span>4.2 MB / 6.3 MB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 - Up to date -->
+            <div class="addin-card updated">
+                <div class="addin-top">
+                    <div class="addin-icon revit">&#9670;</div>
+                    <div class="addin-info">
+                        <div class="addin-name">StructureSync</div>
+                        <div class="addin-desc">Sync structural data between models</div>
+                    </div>
+                    <div class="addin-status">
+                        <span class="status-tag latest">Latest</span>
+                    </div>
+                </div>
+                <div class="addin-bottom">
+                    <div class="addin-version">Installed <span>v1.4.0</span></div>
+                </div>
+            </div>
+
+            <!-- Card 4 - Has update -->
+            <div class="addin-card">
+                <div class="addin-top">
+                    <div class="addin-icon tool">&#9881;</div>
+                    <div class="addin-info">
+                        <div class="addin-name">SheetLink</div>
+                        <div class="addin-desc">Excel &harr; Revit parameter sync</div>
+                    </div>
+                    <div class="addin-status">
+                        <span class="status-tag update">Update</span>
+                    </div>
+                </div>
+                <div class="addin-bottom">
+                    <div class="addin-version">Installed <span>v1.1.2</span> &rarr; <span style="color: var(--gold);">v1.2.0</span></div>
+                </div>
+            </div>
+
+            <!-- Card 5 - Up to date -->
+            <div class="addin-card updated">
+                <div class="addin-top">
+                    <div class="addin-icon revit">&#9670;</div>
+                    <div class="addin-info">
+                        <div class="addin-name">THBIM MCP Server</div>
+                        <div class="addin-desc">AI-powered Revit automation</div>
+                    </div>
+                    <div class="addin-status">
+                        <span class="status-tag latest">Latest</span>
+                    </div>
+                </div>
+                <div class="addin-bottom">
+                    <div class="addin-version">Installed <span>v3.0.0</span></div>
+                </div>
+            </div>
+
+            <!-- Card 6 - Up to date -->
+            <div class="addin-card updated">
+                <div class="addin-top">
+                    <div class="addin-icon tekla">&#9674;</div>
+                    <div class="addin-info">
+                        <div class="addin-name">ParaSync</div>
+                        <div class="addin-desc">Parameter synchronization tools</div>
+                    </div>
+                    <div class="addin-status">
+                        <span class="status-tag latest">Latest</span>
+                    </div>
+                </div>
+                <div class="addin-bottom">
+                    <div class="addin-version">Installed <span>v1.0.5</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="action-bar">
+            <button class="btn-update-all" onclick="simulateUpdate()">
+                &#10549; Update All (3 available)
+            </button>
+            <div class="action-meta">
+                <span class="last-check">Last checked: 2 minutes ago</span>
+                <button class="settings-btn" onclick="toggleSettings()">&#9881; Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>&#9881; Settings</h3>
+                <button class="modal-close" onclick="toggleSettings()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Auto Update</div>
+                        <div class="setting-sublabel">Download & install automatically</div>
+                    </div>
+                    <button class="toggle active" onclick="this.classList.toggle('active')"></button>
+                </div>
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Start with Windows</div>
+                        <div class="setting-sublabel">Run on system startup</div>
+                    </div>
+                    <button class="toggle active" onclick="this.classList.toggle('active')"></button>
+                </div>
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Notifications</div>
+                        <div class="setting-sublabel">Show toast on update</div>
+                    </div>
+                    <button class="toggle active" onclick="this.classList.toggle('active')"></button>
+                </div>
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Check Interval</div>
+                    </div>
+                    <div class="select-wrap">
+                        <select>
+                            <option>30 minutes</option>
+                            <option>1 Hour</option>
+                            <option>6 Hours</option>
+                            <option selected>1 Day</option>
+                            <option>1 Week</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">GitHub Repository</div>
+                        <div class="setting-sublabel">thbim/revit-addins</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Tray Icon Preview -->
+    <div class="tray-preview">
+        <div class="tray-popup" id="trayPopup">
+            <div class="tray-menu-item" onclick="document.querySelector('.app-window').style.display='flex'">
+                <span class="icon">&#9633;</span> Open THBIM Update
+            </div>
+            <div class="tray-menu-item">
+                <span class="icon">&#8635;</span> Check for Updates
+            </div>
+            <div class="tray-menu-item">
+                <span class="icon">&#9881;</span> Settings
+            </div>
+            <div class="tray-divider"></div>
+            <div class="tray-menu-item">
+                <span class="icon">&#9432;</span> About v2.1.0
+            </div>
+            <div class="tray-menu-item danger">
+                <span class="icon">&#9211;</span> Quit
+            </div>
+        </div>
+        <button class="tray-icon-btn" onclick="toggleTray()">TH</button>
+    </div>
+
+    <script>
+        // Hide toast after 4s
+        setTimeout(() => {
+            document.getElementById('toast').classList.add('hidden');
+        }, 4000);
+
+        function toggleSettings() {
+            document.getElementById('settingsModal').classList.toggle('active');
+        }
+
+        function toggleTray() {
+            document.getElementById('trayPopup').classList.toggle('show');
+        }
+
+        // Close tray when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.tray-preview')) {
+                document.getElementById('trayPopup').classList.remove('show');
+            }
+        });
+
+        // Simulate update animation
+        function simulateUpdate() {
+            const btn = document.querySelector('.btn-update-all');
+            btn.textContent = 'Checking for updates...';
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                btn.textContent = 'Downloading updates...';
+            }, 1000);
+
+            setTimeout(() => {
+                btn.textContent = 'Installing...';
+            }, 2500);
+
+            setTimeout(() => {
+                btn.innerHTML = '&#10003; All addins are up to date';
+                btn.style.background = 'linear-gradient(135deg, #34C759, #248A3D)';
+                btn.style.boxShadow = '0 4px 15px rgba(52, 199, 89, 0.25)';
+                btn.style.color = 'white';
+                btn.style.opacity = '1';
+
+                // Update all status tags
+                document.querySelectorAll('.status-tag.update, .status-tag.updating').forEach(tag => {
+                    tag.className = 'status-tag latest';
+                    tag.textContent = 'Latest';
+                });
+
+                // Remove progress bar
+                document.querySelectorAll('.progress-container').forEach(p => {
+                    p.style.display = 'none';
+                });
+
+                // Show toast
+                const toast = document.getElementById('toast');
+                toast.classList.remove('hidden');
+                toast.style.animation = 'toast-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+                setTimeout(() => toast.classList.add('hidden'), 4000);
+
+            }, 3500);
+        }
+
+        // Close modal on overlay click
+        document.getElementById('settingsModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('settingsModal')) {
+                toggleSettings();
+            }
+        });
+    </script>
+</body>
+</html>
