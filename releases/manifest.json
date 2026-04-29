@@ -1,12 +1,12 @@
 ﻿{
-    "version":  "1.1.18",
-    "appVersion":  "1.2.1",
+    "version":  "1.1.17",
+    "appVersion":  "1.2.0",
     "appAsset":  "THBIM.AutoUpdate.exe",
     "tools":  [
                   {
                       "name":  "AutoDim \u0026 Tag Column",
                       "description":  "Automatically dimension columns and grids",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -17,7 +17,7 @@
                   {
                       "name":  "Auto Dim Grid",
                       "description":  "Automatically create dimensions for grids",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -28,7 +28,7 @@
                   {
                       "name":  "Combine Dim",
                       "description":  "Combine multiple collinear dimensions into one",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -39,7 +39,7 @@
                   {
                       "name":  "Align Tags",
                       "description":  "Align tags Left/Right/Top/Bottom + Auto arrange + Leader Angle",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -50,7 +50,7 @@
                   {
                       "name":  "ProSheets",
                       "description":  "Export Views/Sheets to PDF, DWG",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -61,7 +61,7 @@
                   {
                       "name":  "Rename Sheets",
                       "description":  "Rename Sheet and count SheetNumber",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -72,7 +72,7 @@
                   {
                       "name":  "GridBubble",
                       "description":  "Show/Hide Grid and Level heads",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -83,7 +83,7 @@
                   {
                       "name":  "Color Splasher",
                       "description":  "Visualize model data by coloring elements",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -94,7 +94,7 @@
                   {
                       "name":  "Detect Floor Drop",
                       "description":  "Calculate floor drop values",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -105,7 +105,7 @@
                   {
                       "name":  "Check Overlap",
                       "description":  "Check and highlight overlapping elements",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -116,7 +116,7 @@
                   {
                       "name":  "Set Zone",
                       "description":  "Set up Zone configuration",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -127,7 +127,7 @@
                   {
                       "name":  "Pro Filter",
                       "description":  "Select elements by Category",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -138,7 +138,7 @@
                   {
                       "name":  "Linked IDS",
                       "description":  "Display ElementId of selected element",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -149,7 +149,7 @@
                   {
                       "name":  "Combine Param",
                       "description":  "Combine parameters from multiple elements",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -160,7 +160,7 @@
                   {
                       "name":  "Sync Parameter",
                       "description":  "Synchronize parameters across elements",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Annotations",
@@ -171,7 +171,7 @@
                   {
                       "name":  "Create Opening",
                       "description":  "Create openings/sleeves for MEP",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "MEP",
@@ -182,7 +182,7 @@
                   {
                       "name":  "Select Changed",
                       "description":  "Select all changed openings in current view",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "MEP",
@@ -193,7 +193,7 @@
                   {
                       "name":  "Create Clouds",
                       "description":  "Create revision clouds around changed openings",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "MEP",
@@ -204,7 +204,7 @@
                   {
                       "name":  "Accept Changed",
                       "description":  "Accept changes and update baseline for openings",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "MEP",
@@ -215,7 +215,7 @@
                   {
                       "name":  "Split Pipe",
                       "description":  "Divide pipe length by product length",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "MEP",
@@ -226,7 +226,7 @@
                   {
                       "name":  "Mechanical QTO",
                       "description":  "MEP quantity takeoff",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "MEP",
@@ -237,7 +237,7 @@
                   {
                       "name":  "Hanger",
                       "description":  "Generate hangers and supports for Pipes/Ducts",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "MEP",
@@ -248,7 +248,7 @@
                   {
                       "name":  "Bloom",
                       "description":  "Extend MEPCurve or create pipe stub from open connector",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -259,7 +259,7 @@
                   {
                       "name":  "Tap",
                       "description":  "Connect branch to main pipe/duct with Tee or Elbow",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -270,7 +270,7 @@
                   {
                       "name":  "Elbow Up/Down/Left/Right",
                       "description":  "Create directional offset elbows",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -281,7 +281,7 @@
                   {
                       "name":  "Flip Multiple",
                       "description":  "Flip facing/hand of fittings",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -292,7 +292,7 @@
                   {
                       "name":  "Rotate Fitting",
                       "description":  "Rotate fittings 30/45/60/75/90 degrees",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -303,7 +303,7 @@
                   {
                       "name":  "Delete System",
                       "description":  "Disconnect entire piping/duct network",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -314,7 +314,7 @@
                   {
                       "name":  "Disconnect",
                       "description":  "Disconnect element connectors",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -325,7 +325,7 @@
                   {
                       "name":  "Move Connect",
                       "description":  "Move element and connect to target",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -336,7 +336,7 @@
                   {
                       "name":  "Move Connect Align",
                       "description":  "Align, move and connect to target",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -347,7 +347,7 @@
                   {
                       "name":  "Align In 3D",
                       "description":  "Align element origin to target in 3D",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -358,7 +358,7 @@
                   {
                       "name":  "Align Branch",
                       "description":  "Move branch onto main centerline plane",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -369,7 +369,7 @@
                   {
                       "name":  "Align Branch+",
                       "description":  "Move branch onto main plane and connect",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -380,7 +380,7 @@
                   {
                       "name":  "Sum Parameter",
                       "description":  "Sum numeric parameters of selected elements",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -391,7 +391,7 @@
                   {
                       "name":  "Section",
                       "description":  "Create section view through MEP element",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "tool",
                       "category":  "TH Tools MEP",
@@ -402,7 +402,7 @@
                   {
                       "name":  "Create Drop Panel",
                       "description":  "Automatically create Drop Panel or Pile Cap",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Structure",
@@ -413,7 +413,7 @@
                   {
                       "name":  "Auto Pile",
                       "description":  "Automatically create Piling",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Structure",
@@ -424,7 +424,7 @@
                   {
                       "name":  "Split Column",
                       "description":  "Split columns by floor levels",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Structure",
@@ -435,7 +435,7 @@
                   {
                       "name":  "Level Rehost",
                       "description":  "Move elements to new level keeping 3D position",
-                      "version":  "1.1.18",
+                      "version":  "1.1.17",
                       "changelog":  "v1.0.5 update",
                       "iconType":  "revit",
                       "category":  "Structure",
